@@ -1,59 +1,36 @@
 #include "sort.h"
-/**
- * swap - swap 2 elements in a list
- * @head: head of list
- * @a: node
- * @b: node
- */
-void swap(listint_t *a, listint_t *b, listint_t **head)
-{
-	listint_t *aux1 = NULL, *aux2 = NULL;
-
-	if (a == NULL || b == NULL)
-		return;
-	aux1 = a->prev;
-	aux2 = b->next;
-	/* if nodes are adjacent*/
-	if (aux1)
-		aux1->next = b;
-	if (aux2)
-		aux2->prev = a;
-	a->next = aux2;
-	a->prev = b;
-	b->next = a;
-	b->prev = aux1;
-	if (aux1 == NULL)
-		*head = b;
-}
 
 /**
- * insertion_sort_list - the is virtually splited into a sorted and an
- * unsorted part. Values from the unsorted part are picked and placed at the correct position in the sorted part.
- * @list: doubly linked list
+ * insertion_sort_list - sorts a doubly linked list of integers in ascending
+ * order using the Insertion sort algorithm
+ * @list: Double pointer to the head of the linked list
+ *
+ * Return: void
  */
-
-
 void insertion_sort_list(listint_t **list)
 {
-	listint_t *head, *prev;
-	int value;
+	listint_t *swap_node, *next_swap;
 
-	if (list == NULL || (*list)->next == NULL || (*list) == NULL)
-	{
+	if (list == NULL || *list == NULL)
 		return;
-	}
-	head = *list;
-	while (head)
+	swap_node = (*list)->next;
+	while (swap_node != NULL)
 	{
-		prev = head->prev;
-		value = head->n;
-
-		while (prev && prev->n > value)
+		next_swap = swap_node->next;
+		while (swap_node->prev != NULL && swap_node->prev->n > swap_node->n)
 		{
-			swap(prev, head, list);
+			swap_node->prev->next = swap_node->next;
+			if (swap_node->next != NULL)
+				swap_node->next->prev = swap_node->prev;
+			swap_node->next = swap_node->prev;
+			swap_node->prev = swap_node->next->prev;
+			swap_node->next->prev = swap_node;
+			if (swap_node->prev == NULL)
+				*list = swap_node;
+			else
+				swap_node->prev->next = swap_node;
 			print_list(*list);
-			prev = head->prev;
 		}
-		head = head->next;
+		swap_node = next_swap;
 	}
 }

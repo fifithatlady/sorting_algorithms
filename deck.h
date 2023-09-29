@@ -1,19 +1,14 @@
-#ifndef _DECK_H
-#define _DECK_H
-#include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
-#include "qsort"
+#ifndef _DECK_H_
+#define _DECK_H_
 
 /**
- * enum kind_e - representing the four suits in a deck of cards
+ * enum kind_e - suit of the card
  *
- * @SPADE: Spades suit.
- * @HEART: Hearts suit.
- * @CLUB: Clubs suit.
- * @DIAMOND: Diamonds suit.
+ * @SPADE: 0, or spades
+ * @HEART: 1, or hearts
+ * @CLUB: 2, or clubs
+ * @DIAMOND: 3, or diamonds
  */
-
 typedef enum kind_e
 {
 	SPADE = 0,
@@ -23,13 +18,11 @@ typedef enum kind_e
 } kind_t;
 
 /**
- * struct card_s - Playing card
- *
+ * struct card_s - card representation
  * @value: Value of the card
  * From "Ace" to "King"
  * @kind: Kind of the card
  */
-
 typedef struct card_s
 {
 	const char *value;
@@ -51,4 +44,5 @@ typedef struct deck_node_s
 } deck_node_t;
 
 void sort_deck(deck_node_t **deck);
-#endif
+
+#endif /* _DECK_H_ */
